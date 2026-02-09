@@ -50,7 +50,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void HandleJumping()
     {
-        if (jumpAction.WasPressedThisFrame() && isGrounded)
+        if (jumpAction.IsPressed() && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }

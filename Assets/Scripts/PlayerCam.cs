@@ -17,7 +17,7 @@ public class PlayerCam : MonoBehaviour
         lookAction = InputSystem.actions.FindAction("Look");
     }
 
-    void Update()
+    void LateUpdate()
     {
         HandleCamera();
     }
