@@ -5,10 +5,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 {
     [SerializeField] Transform orientation;
     private Rigidbody rb;
-
-    [Header ("Actions")]
-    [SerializeField] InputAction moveAction;
-    [SerializeField] InputAction jumpAction;
+    private bool jumpPressed;
+    private InputAction moveAction;
+    private InputAction jumpAction;
 
     [Header("Movement settings")]
     [SerializeField] float moveSpeed = 5f;
@@ -35,32 +34,40 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         moveInput = moveAction.ReadValue<Vector2>();
         CheckGrounded();
+
+        if (jumpAction.IsPressed())
+        {
+            jumpPressed = true;
+        }    
     }
 
     void FixedUpdate()
     {
         HandleMovement();
         HandleJumping();
-        rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
     }
 
     void HandleMovement()
     {
         moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x; 
         transform.rotation = orientation.rotation;
+        //Vector3 targetVelocity = moveDirection * moveSpeed; 
+        //rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z); // Can use rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime), however this causes jitter
+        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
     }
 
     void HandleJumping()
     {
-        if (jumpAction.IsPressed() && isGrounded)
+        if (jumpPressed && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        jumpPressed = false;
     }
 
     void CheckGrounded()
     {
-        isGrounded = Physics.OverlapBox(groundCheck.position, groundCheckSize, transform.rotation, ground).Length > 0;
+        isGrounded = Physics.OverlapBox(groundCheck.position, groundCheckSize, Quaternion.identity, ground).Length > 0;
     }
 
     void GetActions()
