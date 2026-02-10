@@ -25,6 +25,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         GetActions();
     }
