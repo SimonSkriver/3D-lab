@@ -32,13 +32,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void Update()
     {
-        moveInput = moveAction.ReadValue<Vector2>();
+        ReadInput();
         CheckGrounded();
-
-        if (jumpAction.IsPressed())
-        {
-            jumpPressed = true;
-        }    
     }
 
     void FixedUpdate()
@@ -63,6 +58,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         jumpPressed = false;
+    }
+
+    void ReadInput()
+    {
+        moveInput = moveAction.ReadValue<Vector2>();
+
+        if (jumpAction.IsPressed())
+        {
+            jumpPressed = true;
+        }
     }
 
     void CheckGrounded()
