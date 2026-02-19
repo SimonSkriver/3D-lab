@@ -9,6 +9,8 @@ public class DropAndPickup : MonoBehaviour
 
     private Transform heldObject;
     private InputAction interactAction;
+    public bool hasWater;
+
 
     void Start()
     {
@@ -26,17 +28,18 @@ public class DropAndPickup : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Object"))
                 {
-                    Debug.Log("Ray cast hit a cube");
+                    hasWater = true;
+                    Debug.Log("Ray cast hit a cube");   
                     Grab(hit.collider.transform);
                 }
             }
-
-
         }
+
         else if (interactAction.WasPressedThisFrame() && heldObject)
         {
             Debug.Log("Dropping");
             Drop();
+            hasWater = false;
         }
     }
 
@@ -71,22 +74,5 @@ public class DropAndPickup : MonoBehaviour
 
         oldObjectAnchor = null;
         heldObject = null; 
-
-        //return puzzleObject;
     }
-
-    /*void OnInteract()
-    {
-        Debug.Log("Casting ray");
-        Ray ray = new Ray(transform.position, transform.forward);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance))
-        {
-            if (hit.collider.CompareTag("Object"))
-            {
-                Debug.Log("Ray cast hit a cube");
-                Grab(hit.collider.transform);
-            }
-        }
-    }*/
 }
