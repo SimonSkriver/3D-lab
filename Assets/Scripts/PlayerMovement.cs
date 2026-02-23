@@ -17,9 +17,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [Header ("Ground check")]
     [SerializeField] LayerMask ground;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] Vector3 groundCheckSize;
     [SerializeField] bool isGrounded;
+    private float halfHeight;
 
 
     void Start()
@@ -72,18 +71,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void CheckGrounded()
     {
-        isGrounded = Physics.OverlapBox(groundCheck.position, groundCheckSize, Quaternion.identity, ground).Length > 0;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, halfHeight + 0.2f, ground);
+        //isGrounded = Physics.OverlapBox(groundCheck.position, groundCheckSize, Quaternion.identity, ground).Length > 0;
     }
 
     void GetActions()
     {
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
-    }
-
-    private void OnDrawGizmosSelected() 
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
     }
 }
