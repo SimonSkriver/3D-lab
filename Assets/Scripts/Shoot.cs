@@ -25,9 +25,13 @@ public class Shoot : MonoBehaviour
     {
         if (shootAction.WasPerformedThisFrame())
         {
-            if (Physics.Raycast(eyes.transform.position, eyes.transform.forward))
+            Ray ray = new Ray(eyes.transform.position, eyes.transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                
+                if (hit.collider.CompareTag("Target"))
+                {
+                    Destroy(hit.collider.gameObject);
+                }
             }
             smokeParticle.Play();
             audioSource.PlayOneShot(gunShotAudio);
