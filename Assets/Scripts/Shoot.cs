@@ -30,11 +30,12 @@ public class Shoot : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Target"))
                 {
+                    hit.collider.GetComponent<Balloon>().Pop();
                     Destroy(hit.collider.gameObject);
                 }
             }
             smokeParticle.Play();
-            audioSource.PlayOneShot(gunShotAudio);
+            //audioSource.PlayOneShot(gunShotAudio);
         }
     }
 }
