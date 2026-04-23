@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Object
   - Target
+  - CamSwitch
   layers:
   - Default
   - TransparentFX
