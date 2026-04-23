@@ -14,9 +14,9 @@ public class CubeMovement : MonoBehaviour
         var keyboard = Keyboard.current;
 
         if (keyboard.wKey.isPressed) Assemble(Vector3.forward);
-        if (keyboard.sKey.isPressed) Assemble(Vector3.back);
-        if (keyboard.aKey.isPressed) Assemble(Vector3.left);
-        if (keyboard.dKey.isPressed) Assemble(Vector3.right);
+        else if (keyboard.sKey.isPressed) Assemble(Vector3.back);
+        else if (keyboard.aKey.isPressed) Assemble(Vector3.left);
+        else if (keyboard.dKey.isPressed) Assemble(Vector3.right);
 
         void Assemble(Vector3 dir)
         {
