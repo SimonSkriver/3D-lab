@@ -5,7 +5,7 @@ public class PlayerCam : MonoBehaviour
 {
     [Header ("Camera")]
     [SerializeField] float sensitivity;
-    [SerializeField] Transform playerOrientation;
+    //[SerializeField] Transform playerOrientation;
     [SerializeField] Vector2 lookInput;
     private InputAction lookAction;
     private Vector2 cameraRotation;
@@ -28,6 +28,6 @@ public class PlayerCam : MonoBehaviour
         cameraRotation += lookInput * sensitivity * Time.deltaTime;
         cameraRotation.y = Mathf.Clamp(cameraRotation.y, -90f, 90f);
         transform.rotation = Quaternion.Euler(-cameraRotation.y, cameraRotation.x, 0f);
-        playerOrientation.rotation = Quaternion.Euler(0f, cameraRotation.x, 0f);
+        //playerOrientation.rotation = Quaternion.Euler(0f, cameraRotation.x, 0f);
     }
 }

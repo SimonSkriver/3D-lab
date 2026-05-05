@@ -20,6 +20,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] bool isGrounded;
     private float halfHeight;
 
+    [Header ("Animation")]
+    [SerializeField] Animator animator;
 
     void Start()
     {
@@ -33,6 +35,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         ReadInput();
         CheckGrounded();
+        //if (moveAction.IsPressed()) animator.SetBool("isWalking", true);
+        //else animator.SetBool("isWalking", false);
     }
 
     void FixedUpdate()
@@ -44,7 +48,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
     void HandleMovement()
     {
         moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x; 
-        transform.rotation = orientation.rotation;
         //Vector3 targetVelocity = moveDirection * moveSpeed; 
         //rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z); // Can use rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime), however this causes jitter
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
