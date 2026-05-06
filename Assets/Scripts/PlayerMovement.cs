@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Transform orientation;
     private Rigidbody rb;
@@ -12,6 +12,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [Header("Movement settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float turnSpeed = 5f;
     private Vector3 moveInput;
     private Vector3 moveDirection;
 
@@ -37,6 +38,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
         CheckGrounded();
         //if (moveAction.IsPressed()) animator.SetBool("isWalking", true);
         //else animator.SetBool("isWalking", false);
+        if (moveAction.IsPressed()) animator.SetBool("isWalking", true);
+        else animator.SetBool("isWalking", false);
     }
 
     void FixedUpdate()
@@ -51,6 +54,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         //Vector3 targetVelocity = moveDirection * moveSpeed; 
         //rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z); // Can use rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime), however this causes jitter
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+        }
     }
 
     void HandleJumping()
